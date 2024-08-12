@@ -316,7 +316,7 @@ class Application(tk.Tk):
             self.sending_satus_label.config(
                 text="All Emails are Sucsessfuly Sent")
             self.update_idletasks()
-            self.uploded_file_path="None" .capitalize
+            self.uploded_file_path="None"
 
     def log_out(self):
         file_name = "database\email_data.txt"
