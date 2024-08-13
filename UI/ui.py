@@ -8,6 +8,7 @@ import time
 from sender import EmailSender
 from emailBodyAndDataList import getDataList
 import webbrowser
+from tkinter import PhotoImage
 
 # Function to handle focus in event
 
@@ -41,6 +42,11 @@ def on_focus_out_text(text_widget, placeholder):
 def open_youtube(url):
     webbrowser.open(url)
 
+def open_email():
+    email = "ecoders.99@gmail.com"
+    subject = "Need Help For Email Sender"
+    mailto_link = f"mailto:{email}?subject={subject.replace(' ', '%20')}"
+    webbrowser.open(mailto_link)
 
 class Application(tk.Tk):
 
@@ -58,6 +64,9 @@ class Application(tk.Tk):
         super().__init__()
 
         self.title("Email Sender")
+        # Load the image (icon) - adjust the path to your image
+        icon = PhotoImage(file="asset\icons8-email-32.png")
+        self.iconphoto(False, icon)
 
         # Set the window to full screen and disable resizing
         # Set a fixed window size
@@ -96,10 +105,12 @@ class Application(tk.Tk):
                 if (self.is_start == False):
                     messagebox.showerror(
                         "Error", "Email and Password Mismatch or Connection issue")
+                    self.log_out()
                     exit()
             except:
                 messagebox.showerror(
                     "Error", "Email and Password Mismatch or Connection issue")
+                self.log_out()
                 exit()
         else:
             # Initialize login frame
@@ -116,6 +127,8 @@ class Application(tk.Tk):
         helpmenu = Menu(menu)
         menu.add_cascade(label='Help', menu=helpmenu)
         helpmenu.add_command(label='About')
+        helpmenu.add_command(label='Help', command=open_email)
+        
 
     def create_login_frame(self):
         label_username = tk.Label(self.login_frame, text="Account Details", font=(
@@ -158,7 +171,7 @@ class Application(tk.Tk):
     def create_greeting_frame(self):
         label_username = tk.Label(
             self.greeting_frame, text="Write Email", font=("Helvetica", 20), bg='black', fg='white')
-        label_username.pack(pady=15)
+        label_username.pack(pady=(15,5))
 
         # Create a button to trigger the file dialog
         file_button = tk.Button(
@@ -185,7 +198,7 @@ class Application(tk.Tk):
 
         # email body
         self.text_area_email_body = tk.Text(
-            self.greeting_frame, width=80, height=19)
+            self.greeting_frame, width=80, height=18)
         self.text_area_email_body.pack(pady=5)
 
         placeholder_email_body = "Enter Email"
@@ -241,10 +254,12 @@ class Application(tk.Tk):
                 if (self.is_start == False):
                     messagebox.showerror(
                         "Error", "Email and Password Mismatch or Connection issue")
+                    self.log_out()
                     exit()
             except:
                 messagebox.showerror(
                     "Error", "Email and Password Mismatch or Connection issue")
+                self.log_out()
                 exit()
             # Switch to the greeting frame
             self.login_frame.pack_forget()
@@ -326,5 +341,5 @@ class Application(tk.Tk):
             print(f"{file_name} has been deleted.")
             self.greeting_frame.pack_forget()
             self.login_frame.pack(fill="both", expand=True)
-        else:
-            messagebox.showerror("Error", "You are not loged!")
+        # else:
+        #     messagebox.showerror("Error", "You are not loged!")
